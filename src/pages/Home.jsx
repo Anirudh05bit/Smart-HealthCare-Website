@@ -1,11 +1,13 @@
 ﻿import React from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
+import WebBackground from '../components/WebBackground';
 
 export default function Home() {
   return (
     <div className="home-root">
       <header className="home-hero">
+        <WebBackground />
         <div className="hero-overlay" />
         <div className="hero-pattern" />
 
@@ -23,27 +25,9 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-bottom-cards">
-          <div className="cards-inner">
-            <div className="feature-card">
-              <div className="fc-icon"></div>
-              <h4>Trusted Doctors</h4>
-              <p>Verified professionals across multiple specialties.</p>
-            </div>
-            <div className="feature-card">
-              <div className="fc-icon"></div>
-              <h4>Easy Scheduling</h4>
-              <p>Book same-day or future appointments in seconds.</p>
-            </div>
-            <div className="feature-card">
-              <div className="fc-icon"></div>
-              <h4>Secure Records</h4>
-              <p>Encrypted medical records and private messaging.</p>
-            </div>
-          </div>
-        </div>
+        
       </header>
-
+      
       <main className="home-main">
         <section className="about-section">
           <h2>Care that puts patients first</h2>
@@ -62,6 +46,13 @@ export default function Home() {
           </div>
         </section>
       </main>
+      
+      {/* Footer: ensure .footer exists so Home.css background-image is applied */}
+      <footer className="footer">
+        <div className="footer-inner">
+          <p>© {new Date().getFullYear()} Smart HealthCare. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 }

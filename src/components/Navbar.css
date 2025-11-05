@@ -2,10 +2,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #7c3aed 100%);
-  padding: 20px 40px;
-  color: white;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(#D0F0C0,white);
+  padding: 10px 40px;
+  color: black;
+  box-shadow: 0 4px 20px green(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   position: relative;
   overflow: hidden;
@@ -18,7 +18,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.3), transparent);
+  
   animation: shimmer 3s infinite;
 }
 
@@ -35,7 +35,7 @@
   font-weight: 700;
   font-size: 28px;
   letter-spacing: -0.5px;
-  background: linear-gradient(45deg, purple, white, #c084fc);
+  background: linear-gradient(45deg, green, green, darkgreen);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -68,9 +68,10 @@
 
 .links a {
   margin: 0 10px;
-  color: #e0e7ff;
-  text-decoration: none;
-  font-weight: 500;
+  color: darkgreen;
+  font-size: 1.1rem;
+  
+  font-weight: 600;
   padding: 10px 20px;
   border-radius: 8px;
   position: relative;
@@ -84,8 +85,9 @@
   top: 0;
   left: 0;
   width: 100%;
+
   height: 100%;
-  background: linear-gradient(135deg, white, rgba(124, 58, 237, 0.3));
+  background: linear-gradient(135deg, green, cyan);
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   z-index: -1;
@@ -93,13 +95,14 @@
 
 .links a:hover::before {
   transform: translateX(0);
+  color: black;
 }
 
 .links a:hover {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(124, 58, 237, 0.2));
+  background: linear-gradient(135deg, cyan(59, 130, 246, 0.2), rgba(124, 58, 237, 0.2));
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
-  color: #fff;
+  color: white;
 }
 
 .links a:active {
