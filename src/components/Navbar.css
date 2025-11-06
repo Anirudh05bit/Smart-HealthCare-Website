@@ -2,16 +2,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(#D0F0C0,white);
   padding: 10px 40px;
   color: black;
+  background-color: transparent;
   box-shadow: 0 4px 20px green(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
-  position: relative;
   overflow: hidden;
 }
 
-.navbar::before {
+.navbar-root{
+  position: fixed;
+  top:0;
+  width: 100%;
+  z-index: 10;
+
+}
+
+/* .navbar::before {
   content: '';
   position: absolute;
   top: 0;
@@ -20,7 +27,7 @@
   height: 100%;
   
   animation: shimmer 3s infinite;
-}
+} */
 
 @keyframes shimmer {
   0% {
@@ -35,7 +42,7 @@
   font-weight: 700;
   font-size: 28px;
   letter-spacing: -0.5px;
-  background: linear-gradient(45deg, green, green, darkgreen);
+  background-color: white;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -44,6 +51,16 @@
   transition: transform 0.3s ease;
   animation: gradientShift 3s alternate infinite;
   background-size: 200% 200%;
+}
+
+.logo-img{
+  height: 10vh;
+  width: 10vh;
+  background-image: url('../assets/medicoo-removebg-preview.png');
+  background-size: 150% 150%;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;;
 }
 
 @keyframes gradientShift {
@@ -68,7 +85,7 @@
 
 .links a {
   margin: 0 10px;
-  color: darkgreen;
+  color: white;
   font-size: 1.1rem;
   
   font-weight: 600;

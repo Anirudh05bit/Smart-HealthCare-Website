@@ -7,21 +7,22 @@ export default function Home() {
   return (
     <div className="home-root">
       <header className="home-hero">
-        <WebBackground />
         <div className="hero-overlay" />
         <div className="hero-pattern" />
+        <div className='hero-container'>
+          <div className="hero-content">
+            <h1 className="hero-title">Where expertise meets professionalism</h1>
+            <p className="hero-sub">
+              Modern, secure telehealth and in-person care. Book appointments, connect with top
+              specialists, and manage patient records  all in one place.
+            </p>
 
-        <div className="hero-content">
-          <div className="eyebrow">Smart HealthCare</div>
-          <h1 className="hero-title">Where expertise meets professionalism</h1>
-          <p className="hero-sub">
-            Modern, secure telehealth and in-person care. Book appointments, connect with top
-            specialists, and manage patient records  all in one place.
-          </p>
-
-          <div className="hero-ctas">
-            <Link to="/doctors" className="btn btn-primary">Find a Doctor</Link>
-            <Link to="/patients" className="btn btn-ghost">For Patients</Link>
+            <div className="hero-ctas">
+              <Link to="/doctors" className="btn btn-primary">Find a Doctor</Link>
+              <Link to="/patients" className="btn btn-ghost">For Patients</Link>
+            </div>
+          </div>
+          <div className="hero-background">
           </div>
         </div>
 

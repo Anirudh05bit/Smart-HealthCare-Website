@@ -17,8 +17,8 @@ const WebBackground = () => {
     const points = Array.from({ length: 120 }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 3.2, // increased speed
-      vy: (Math.random() - 0.5) * 3.2,
+      vx: (Math.random() - 0.5) * 1.2, // increased speed
+      vy: (Math.random() - 0.5) * 1.2,
     }));
 
     let mouse = { x: -1000, y: -1000 };
@@ -52,13 +52,13 @@ const WebBackground = () => {
         if (dist < 80) {
           // Move away from mouse
           const angle = Math.atan2(dy, dx);
-          p.vx += Math.cos(angle) * 3.5;
+          p.vx += Math.cos(angle) * 5.5;
           p.vy += Math.sin(angle) * 2.5;
         }
         // If velocity is too low, reset to random
         if (Math.abs(p.vx) < 0.1 && Math.abs(p.vy) < 0.1) {
-          p.vx = (Math.random() - 0.5) * 3.2;
-          p.vy = (Math.random() - 0.5) * 3.2;
+          p.vx = (Math.random() - 0.5) * 1.2;
+          p.vy = (Math.random() - 0.5) * 1.2;
         }
         // Apply velocity
         p.x += p.vx;
