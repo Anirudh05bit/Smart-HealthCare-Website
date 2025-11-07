@@ -6,10 +6,24 @@
   color: black;
   background-color: transparent;
   box-shadow: 0 4px 20px green(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
+  
   overflow: hidden;
 }
-
+.logocont{
+  font-weight: 700;
+  font-size: 40px;
+  letter-spacing: -0.5px;
+  background-color: white;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  margin-right: 600px;
+  z-index: 1;
+  transition: transform 0.3s ease;
+  animation: gradientShift 3s alternate infinite;
+  background-size: 200% 200%;
+}
 .navbar-root{
   position: fixed;
   top:0;
