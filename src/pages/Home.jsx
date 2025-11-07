@@ -230,7 +230,7 @@ export default function Home() {
             {/* Slider */}
             <div style={{
               position: 'relative',
-              maxWidth: '900px',
+              maxWidth: '50vw',
               margin: '0 auto',
               overflow: 'hidden',
               borderRadius: '24px'
@@ -242,8 +242,7 @@ export default function Home() {
               }}>
                 {doctors.map((doctor, idx) => (
                   <div key={idx} style={{
-                    minWidth: '100%',
-                    padding: '2rem'
+                    minWidth: '50vw',
                   }}>
                     <div style={{
                       background: 'white',
@@ -377,8 +376,8 @@ export default function Home() {
                 left: '1rem',
                 top: '50%',
                 transform: 'translateY(-50%)',
-                width: '50px',
-                height: '50px',
+                width: '70px',
+                height: '70px',
                 borderRadius: '50%',
                 background: 'rgba(255, 255, 255, 0.95)',
                 border: '2px solid #cffafe',
@@ -391,16 +390,16 @@ export default function Home() {
                 zIndex: 10
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#06b6d4';
+                e.currentTarget.style.borderColor = '#06b6d4';
                 const svg = e.currentTarget.querySelector('svg');
                 if (svg) svg.style.color = 'white';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.95)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.95)';
                 const svg = e.currentTarget.querySelector('svg');
                 if (svg) svg.style.color = '#06b6d4';
               }}>
-                <ChevronRight size={24} color="#06b6d4" style={{ transform: 'rotate(180deg)', transition: 'color 0.3s ease' }} />
+                <ChevronRight size={100} color="#06b6d4" style={{ transform: 'rotate(180deg)', transition: 'color 0.3s ease' }} />
               </button>
 
               <button onClick={nextSlide} style={{
@@ -408,8 +407,8 @@ export default function Home() {
                 right: '1rem',
                 top: '50%',
                 transform: 'translateY(-50%)',
-                width: '50px',
-                height: '50px',
+                width: '70px',
+                height: '70px',
                 borderRadius: '50%',
                 background: 'rgba(255, 255, 255, 0.95)',
                 border: '2px solid #cffafe',
@@ -422,16 +421,16 @@ export default function Home() {
                 zIndex: 10
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#06b6d4';
+                e.currentTarget.style.borderColor = '#06b6d4';
                 const svg = e.currentTarget.querySelector('svg');
                 if (svg) svg.style.color = 'white';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.95)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.95)';
                 const svg = e.currentTarget.querySelector('svg');
                 if (svg) svg.style.color = '#06b6d4';
               }}>
-                <ChevronRight size={24} color="#06b6d4" style={{ transition: 'color 0.3s ease' }} />
+                <ChevronRight size={100} color="#06b6d4" style={{ transition: 'color 0.3s ease' }} />
               </button>
 
               {/* Dots Indicator */}

@@ -4,7 +4,7 @@
   align-items: center;
   padding: 10px 40px;
   color: black;
-  background-color: transparent;
+  background-color: #47999d;
   box-shadow: 0 4px 20px green(0, 0, 0, 0.3);
   
   overflow: hidden;
@@ -18,7 +18,6 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   position: relative;
-  margin-right: 600px;
   z-index: 1;
   transition: transform 0.3s ease;
   animation: gradientShift 3s alternate infinite;
@@ -51,7 +50,11 @@
     left: 100%;
   }
 }
-
+.logo-x{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .logo {
   font-weight: 700;
   font-size: 28px;

@@ -6,8 +6,10 @@ function Navbar() {
   return (
     <div className="navbar-root">
       <nav className="navbar">
-        <div className="logo-img"></div>
-        <div className="logocont">SHMS</div>
+        <div className="logo-x">
+          <div className="logo-img"></div>
+          <div className="logocont">GuruDharma</div>
+        </div>
         <div className="links">
           <Link to="/">Home</Link>
           <Link to="/patients">Patients</Link>
