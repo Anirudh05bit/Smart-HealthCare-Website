@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap');
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -11,8 +13,9 @@
 }
 .logocont{
   font-weight: 700;
-  font-size: 40px;
+  font-size: 47px;
   letter-spacing: -0.5px;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   background-color: white;
   -webkit-background-clip: text;
   background-clip: text;

@@ -11,12 +11,13 @@
   color: #e6eef8;
   background-color: var(--bg-1);
   overflow-x: hidden;
+  
 }
 
 /* ===== HERO SECTION ===== */
 .home-hero {
   position: relative;
-  min-height: 85vh;
+  min-height: 105vh;
   background: linear-gradient(145deg, #7bb6ba, #44868e);
   display: flex;
   align-items: center;
