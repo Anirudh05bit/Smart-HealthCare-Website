@@ -1,27 +1,97 @@
-/* Register page styles - white + cyan theme matching login */
+/* Clean white + cyan themed register styles (same look/padding as login) */
 :root{
-  --bg: #f8fbfb;
+  --bg: cyan;
   --card: #ffffff;
   --cyan-1: #06b6d4;
   --cyan-2: #7dd3f5;
   --muted: #6b7280;
+  --glass: rgba(13, 42, 48, 0.04);
 }
 
-.register-page { background: var(--bg); min-height: calc(100vh - 80px); display:flex; align-items:center; padding:3rem 1rem }
-.register-card { max-width:720px; margin:0 auto; background:var(--card); border-radius:14px; padding:2rem; box-shadow:0 20px 50px rgba(18,38,46,0.06); border:1px solid rgba(13,42,48,0.04) }
-.register-card h2 { margin:0 0 .5rem; color:#0f172a }
-.register-card .muted { color:var(--muted); margin-bottom:1rem }
+.register-page {
+  /* Reduced min-height to ensure content fits within the viewport */
+  /* Reduced top/bottom margin */
+  background: linear-gradient(145deg, #7bb6ba, #44868e);
+  min-height: 91vh; /* Changed from calc(100vh - 80px) to 100vh for simpler calculation */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1rem; /* Reduced padding */
+  margin: 0; /* Removed margin to maximize vertical space */
+}
 
-.role-toggle { display:flex; gap:0.5rem; margin-bottom:1rem }
-.role { flex:1; padding:10px 12px; border-radius:999px; border:1px solid rgba(13,42,48,0.06); background:transparent; cursor:pointer; font-weight:700; color:var(--muted) }
-.role.active { background: linear-gradient(90deg,var(--cyan-1),var(--cyan-2)); color:white; box-shadow:0 8px 20px rgba(6,182,212,0.12) }
+.register-hero {
+  /* Reduced max-width slightly and gap to save space */
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 480px; /* Decreased card column width slightly */
+  gap: 2rem; /* Reduced gap */
+  align-items: center;
+  /* Added a small top margin to pull content up */
+  margin-top: 20px;
+}
 
-.register-form { display:grid; gap:0.75rem }
-.label { font-size:0.85rem; color:var(--muted); font-weight:600 }
-.input { padding:0.9rem 1rem; border-radius:10px; border:1px solid rgba(13,42,48,0.06); background:transparent; font-size:1rem }
-.input:focus { outline:none; box-shadow:0 6px 18px rgba(6,182,212,0.12); border-color:var(--cyan-1) }
+.hero-left { position:relative; padding:2.4rem ;background-image: url();}
+.brand { font-size:2.25rem; margin:0; color:var(--cyan-1); font-weight:800; letter-spacing: -0.5px }
+.lead { margin:0.6rem 0 1.2rem; color:var(--muted); font-size:1.05rem }
+.benefits { list-style:none; padding:0; margin:0; display:grid; gap:0.6rem }
+.benefits li { padding:0.6rem 0.8rem; background:linear-gradient(90deg, rgba(6,182,212,0.06), rgba(125,211,252,0.03)); border-radius:10px; color:#0f172a; font-weight:600 }
 
-.btn.full { margin-top:0.5rem; padding:0.9rem; border-radius:10px; border:none; cursor:pointer; font-weight:700 }
-.btn-primary { background: linear-gradient(90deg,var(--cyan-1),var(--cyan-2)); color:white }
+.accent-blob { position:absolute; right:-60px; top:-40px; width:260px; height:260px; background:radial-gradient(circle at 30% 30%, rgba(6,182,212,0.18), transparent 30%), radial-gradient(circle at 70% 70%, rgba(125,211,252,0.12), transparent 30%); filter:blur(36px); transform: rotate(12deg); border-radius: 50% }
 
-@media (max-width:700px){ .register-card{ padding:1rem } }
+.register-card {
+  background:var(--card);
+  border-radius:18px;
+  padding:1.4rem; /* Slightly reduced padding */
+  box-shadow: 0 20px 50px rgba(18,38,46,0.08);
+  border:1px solid rgba(13,42,48,0.04);
+  animation: cardPop .45s cubic-bezier(.2,.9,.3,1);
+  margin-top: 1.5rem;
+  align-self: center;
+  justify-self: center;
+
+  width: 100%;
+  max-width: 480px; /* Matches the grid column size */
+}
+.card-header h3 { margin:0; font-size:1.3rem; color:#0f172a } /* Slightly reduced font size */
+.card-header .muted { color:var(--muted); margin-top:4px; font-size: 0.95rem; } /* Adjusted size and margin */
+
+.role-toggle { display:flex; gap:0.5rem; margin:0.8rem 0 1rem; background:var(--glass); padding:5px; border-radius:10px } /* Reduced vertical margins and padding */
+.role { flex:1; padding:7px 10px; border-radius:8px; background:transparent; border:none; cursor:pointer; font-weight:600; color:var(--muted); transition: all .22s ease } /* Reduced padding and font weight */
+.role.active { background: linear-gradient(90deg,var(--cyan-1),var(--cyan-2)); color:white; box-shadow: 0 6px 16px rgba(6,182,212,0.12) } /* Reduced box shadow */
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem; /* Reduced gap */
+  margin: 0rem 0; /* Added top and bottom margin to the form as requested */
+}
+
+.label { font-size:0.8rem; color:var(--muted); font-weight:600 } /* Reduced font size */
+.input { padding:0.8rem 1rem; border-radius:8px; border:1px solid rgba(13,42,48,0.06); background:transparent; font-size:0.95rem } /* Reduced padding, border-radius, and font size */
+.input:focus { outline:none; box-shadow: 0 4px 12px rgba(6,182,212,0.1); border-color:var(--cyan-1) } /* Reduced box shadow */
+
+.form-row { display:flex; justify-content:space-between; align-items:center; margin-top:2px } /* Reduced margin */
+.remember { color:var(--muted); font-size:0.85rem } /* Reduced font size */
+.forgot { color:var(--cyan-1); text-decoration:none; font-weight:600; font-size: 0.9rem; } /* Reduced font size */
+
+.btn.full { width:100%; padding:1.4rem 1rem; border-radius:8px; border:none; cursor:pointer; font-weight:700 } /* Reduced padding and border-radius */
+.btn-primary { background: linear-gradient(90deg,var(--cyan-1),var(--cyan-2)); color:white; box-shadow: 0 8px 20px rgba(6,182,212,0.16) } /* Reduced box shadow */
+.btn-primary:active { transform: translateY(1px) }
+
+.alt { margin-top:0.8rem; text-align:center; color:var(--muted); display:flex; gap:0.6rem; justify-content:center; align-items:center; font-size: 0.9rem; } /* Reduced margin and font size */
+.alt a { color:var(--cyan-1); font-weight:700; text-decoration:none }
+
+.error { color: #b91c1c; font-weight:700; font-size:0.85rem; margin-top:0.3rem } /* Reduced font size and margin */
+.success { color: #065f46; font-weight:700; font-size:0.85rem; margin-top:0.3rem } /* Reduced font size and margin */
+
+@keyframes cardPop { from { transform: translateY(10px) scale(.995); opacity:0 } to { transform: translateY(0) scale(1); opacity:1 } }
+
+/* Responsive */
+@media (max-width:980px) {
+  .register-hero { grid-template-columns: 1fr; gap:1.25rem; margin-top: 0; }
+  .accent-blob { display:none }
+  .hero-left { padding:1rem }
+}

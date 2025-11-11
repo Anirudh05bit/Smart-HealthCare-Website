@@ -3,101 +3,125 @@ import Layout from '../components/Layout';
 import './register.css';
 
 export default function Register() {
-	const [role, setRole] = useState('patient');
-	const [form, setForm] = useState({
-		name: '',
-		email: '',
-		password: '',
-		dob: '',
-		address: '',
-		emergency: '',
-		license: '',
-		specialization: '',
-		hospital: '',
-	});
+  const [role, setRole] = useState('patient');
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    dob: '',
+    address: '',
+    emergency: '',
+    license: '',
+    specialization: '',
+    hospital: '',
+  });
 
-	function update(field) {
-		return (e) => setForm((s) => ({ ...s, [field]: e.target.value }));
-	}
+  function update(field) {
+    return (e) => setForm((s) => ({ ...s, [field]: e.target.value }));
+  }
 
-	function handleSubmit(e) {
-		e.preventDefault();
-		// Client-side simple validation
-		if (!form.name || !form.email || !form.password) {
-			alert('Please fill name, email and password');
-			return;
-		}
+  async function handleSubmit(e) {
+    e.preventDefault();
 
-		if (role === 'doctor' && (!form.license || !form.specialization)) {
-			alert('Please provide doctor license and specialization');
-			return;
-		}
+    if (!form.name || !form.email || !form.password) {
+      alert('Please fill name, email, and password');
+      return;
+    }
 
-		// Placeholder: replace with API call
-		console.log('register', { role, ...form });
-		alert(`Registered as ${role}: ${form.name}`);
-	}
+    if (role === 'doctor' && (!form.license || !form.specialization)) {
+      alert('Please provide doctor license and specialization');
+      return;
+    }
 
-	return (
-		<Layout>
-			<div className="register-page">
-				<div className="register-card">
-					<h2>Create account</h2>
-					<p className="muted">Select your role and enter required details</p>
+    try {
+      const response = await fetch('http://127.0.0.1:5000/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role, ...form }),
+      });
 
-					<div className="role-toggle">
-						<button
-							type="button"
-							className={role === 'patient' ? 'role active' : 'role'}
-							onClick={() => setRole('patient')}
-						>Patient</button>
-						<button
-							type="button"
-							className={role === 'doctor' ? 'role active' : 'role'}
-							onClick={() => setRole('doctor')}
-						>Doctor</button>
-					</div>
+      const data = await response.json();
 
-					<form className="register-form" onSubmit={handleSubmit}>
-						<label className="label">Full name</label>
-						<input className="input" value={form.name} onChange={update('name')} required />
+      if (response.ok) {
+        alert(data.message);
+        console.log('Registered:', data);
+        // optionally redirect to login
+        // window.location.href = '/login';
+      } else {
+        alert(data.error || 'Registration failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error connecting to server');
+    }
+  }
 
-						<label className="label">Email</label>
-						<input className="input" type="email" value={form.email} onChange={update('email')} required />
+  return (
+    <Layout>
+      <div className="register-page">
+        <div className="register-card">
+          <h2>Create account</h2>
+          <p className="muted">Select your role and enter required details</p>
 
-						<label className="label">Password</label>
-						<input className="input" type="password" value={form.password} onChange={update('password')} required />
+          <div className="role-toggle">
+            <button
+              type="button"
+              className={role === 'patient' ? 'role active' : 'role'}
+              onClick={() => setRole('patient')}
+            >
+              Patient
+            </button>
+            <button
+              type="button"
+              className={role === 'doctor' ? 'role active' : 'role'}
+              onClick={() => setRole('doctor')}
+            >
+              Doctor
+            </button>
+          </div>
 
-						{role === 'patient' && (
-							<>
-								<label className="label">Date of birth</label>
-								<input className="input" type="date" value={form.dob} onChange={update('dob')} />
+          <form className="register-form" onSubmit={handleSubmit}>
+            <label className="label">Full name</label>
+            <input className="input" value={form.name} onChange={update('name')} required />
 
-								<label className="label">Address</label>
-								<input className="input" value={form.address} onChange={update('address')} />
+            <label className="label">Email</label>
+            <input className="input" type="email" value={form.email} onChange={update('email')} required />
 
-								<label className="label">Emergency contact</label>
-								<input className="input" value={form.emergency} onChange={update('emergency')} />
-							</>
-						)}
+            <label className="label">Password</label>
+            <input className="input" type="password" value={form.password} onChange={update('password')} required />
 
-						{role === 'doctor' && (
-							<>
-								<label className="label">Medical license number</label>
-								<input className="input" value={form.license} onChange={update('license')} />
+            {role === 'patient' && (
+              <>
+                <label className="label">Date of birth</label>
+                <input className="input" type="date" value={form.dob} onChange={update('dob')} />
 
-								<label className="label">Specialization</label>
-								<input className="input" value={form.specialization} onChange={update('specialization')} />
+                <label className="label">Address</label>
+                <input className="input" value={form.address} onChange={update('address')} />
 
-								<label className="label">Hospital / Clinic</label>
-								<input className="input" value={form.hospital} onChange={update('hospital')} />
-							</>
-						)}
+                <label className="label">Emergency contact</label>
+                <input className="input" value={form.emergency} onChange={update('emergency')} />
+              </>
+            )}
 
-						<button className="btn btn-primary full" type="submit">Create account</button>
-					</form>
-				</div>
-			</div>
-		</Layout>
-	);
+            {role === 'doctor' && (
+              <>
+                <label className="label">Medical license number</label>
+                <input className="input" value={form.license} onChange={update('license')} />
+
+                <label className="label">Specialization</label>
+                <input className="input" value={form.specialization} onChange={update('specialization')} />
+
+                <label className="label">Hospital / Clinic</label>
+                <input className="input" value={form.hospital} onChange={update('hospital')} />
+              </>
+            )}
+
+            <button className="btn btn-primary full" type="submit">
+              Create account
+            </button>
+          </form>
+        </div>
+      </div>
+    </Layout>
+  );
 }
