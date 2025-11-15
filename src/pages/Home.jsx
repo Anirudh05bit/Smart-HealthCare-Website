@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { Heart, Shield, Clock, Award, ChevronRight, Star } from 'lucide-react';
 import './Home.css';
-import WebBackground from '../components/WebBackground';
+
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);

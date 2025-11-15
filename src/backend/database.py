@@ -8,7 +8,7 @@ bcrypt = Bcrypt()
 
 def init_app(app):
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
-        "DATABASE_URL", "postgresql://postgres:mypassword@localhost:5432/shm"
+        "DATABASE_URL", "postgresql://postgres:5002@localhost:5432/shm"
     )
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)

@@ -37,7 +37,33 @@ async function ensureTables() {
   `);
 }
 
-ensureTables().catch((err) => console.error('Error creating tables', err));
+// Listen for unexpected idle client errors
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle Postgres client', err);
+});
+
+async function initServer() {
+  try {
+    // quick test connection
+    const client = await pool.connect();
+    client.release();
+    console.log('Connected to Postgres successfully');
+
+    // ensure tables exist
+    await ensureTables();
+
+    // start express server only after DB is ready
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => console.log('Server listening on', PORT));
+  } catch (err) {
+    console.error('Failed to connect to Postgres. Please check DATABASE_URL and ensure Postgres is running.');
+    console.error(err);
+    process.exit(1);
+  }
+}
+
+// initialize
+initServer();
 
 // Register
 app.post('/api/register', async (req, res) => {
