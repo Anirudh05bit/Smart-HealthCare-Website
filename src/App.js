@@ -1,44 +1,74 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./auth/AuthContext";
-import RoleRoute from "./components/RoleRoute";
+import React, { useContext } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
-import PatientPage from "./pages/patient";
-import DoctorPage from "./pages/doctor";
-import AdminPage from "./pages/admin";
+import Patients from "./pages/Patients";
+import Doctors from "./pages/Doctors";
+import Admin from "./pages/Admin";
+import Login from "./pages/login";
+import Register from "./pages/register";
+import Navbar from "./components/Navbar";
+import { AuthProvider, AuthContext } from "./context/AuthContext";
+import ScrollAnimator from "./components/ScrollAnimator";
 
-export default function App() {
+function ProtectedRoute({ children }) {
+  const { user, loading } = useContext(AuthContext);
+  if (loading) return <div>Loading...</div>;
+  return user ? children : <Navigate to="/login" />;
+}
+
+function App() {
+  const { user, loading } = useContext(AuthContext);
+
+  if (loading) return <div>Loading...</div>;
+
+  return (
+    <Router>
+      <ScrollAnimator />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* Protected routes - require authentication */}
+        <Route
+          path="/patients"
+          element={
+            <ProtectedRoute>
+              <Patients />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/doctors"
+          element={
+            <ProtectedRoute>
+              <Doctors />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <Admin />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
+  );
+}
+
+function AppWithAuth() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/patient"
-            element={
-              <RoleRoute role="patient">
-                <PatientPage />
-              </RoleRoute>
-            }
-          />
-          <Route
-            path="/doctor"
-            element={
-              <RoleRoute role="doctor">
-                <DoctorPage />
-              </RoleRoute>
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              <RoleRoute role="admin">
-                <AdminPage />
-              </RoleRoute>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
+      <App />
     </AuthProvider>
   );
 }
+
+export default AppWithAuth;

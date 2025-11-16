@@ -1,34 +1,38 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../auth/AuthContext";
+import React, { useState, useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import "./login.css";
 
-export default function LoginPage({ onGoBack, onNavigateToRegister }) {
-  const [role, setRole] = useState("patient");
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const auth = useAuth();
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
     setLoading(true);
+
     try {
-      const user = await auth.login({ email, password }); 
-      
-      if (user && user.role) {
-        if (user.role === "patient") navigate("/patient", { replace: true });
-        else if (user.role === "doctor") navigate("/doctor", { replace: true });
-        else if (user.role === "admin") navigate("/admin", { replace: true });
-        else navigate("/", { replace: true });
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok && data.token && data.user) {
+        login(data.user, data.token);
+        navigate("/");
       } else {
-        navigate("/", { replace: true });
+        setError(data.error || "Invalid credentials");
       }
     } catch (err) {
-      setError(err.message || "Login failed. Please check your credentials.");
+      console.error("Login error:", err);
+      setError("Error connecting to server");
     } finally {
       setLoading(false);
     }
@@ -39,26 +43,7 @@ export default function LoginPage({ onGoBack, onNavigateToRegister }) {
       <div className="login-card">
         <div className="card-header">
           <h3>Sign in</h3>
-          <p className="muted">Select your role and log in to continue</p>
-        </div>
-        
-        <div className="role-toggle" role="tablist" aria-label="Select role">
-          <button
-            type="button"
-            className={role === "doctor" ? "role active" : "role"}
-            onClick={() => setRole("doctor")}
-            aria-pressed={role === "doctor"}
-          >
-            Doctor 👨‍⚕️
-          </button>
-          <button
-            type="button"
-            className={role === "patient" ? "role active" : "role"}
-            onClick={() => setRole("patient")}
-            aria-pressed={role === "patient"}
-          >
-            Patient 🧑
-          </button>
+          <p className="muted">Log in to your account</p>
         </div>
 
         <form className="login-form" onSubmit={handleSubmit}>
@@ -82,40 +67,15 @@ export default function LoginPage({ onGoBack, onNavigateToRegister }) {
             placeholder="Enter your password"
           />
 
-          <div className="form-row">
-            <label className="remember">
-              <input type="checkbox" /> Remember me
-            </label>
-            <a className="forgot" href="#forgot">
-              Forgot password?
-            </a>
-          </div>
+          {error && <p className="error">{error}</p>}
 
           <button className="btn btn-primary full" type="submit" disabled={loading}>
             {loading ? "Signing in..." : "Sign in"}
           </button>
 
-          {error && <div className="error-message">{error}</div>}
-
           <div className="alt">
             <span>Don't have an account?</span>
-            <button 
-              type="button" 
-              onClick={onNavigateToRegister}
-              style={{ background: 'none', border: 'none', color: '#06b6d4', cursor: 'pointer', fontWeight: '600', padding: '0 5px' }}
-            >
-              Create one
-            </button>
-          </div>
-
-          <div className="alt" style={{ marginTop: '1rem' }}>
-            <button 
-              type="button" 
-              onClick={onGoBack}
-              style={{ background: 'none', border: 'none', color: '#155e75', cursor: 'pointer', fontWeight: '500', padding: '0 5px' }}
-            >
-              &larr; Back to Home
-            </button>
+            <Link to="/register">Create one</Link>
           </div>
         </form>
       </div>
