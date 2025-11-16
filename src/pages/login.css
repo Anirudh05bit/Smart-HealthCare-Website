@@ -10,22 +10,20 @@
 
 .login-page {
   /* Increased height to cover the page properly */
-  background: linear-gradient(145deg, #7bb6ba, #44868e);
-  min-height: 100vh; /* Changed to 100vh to ensure full page height */
   display:flex;
   align-items:center;
   justify-content: center;
-  padding:3rem 1rem;
+  
 }
 
 .login-hero {
   /* Increased max-width for broader content and card */
-  max-width: 1300px;
+  max-width: 130px;
   margin:0 auto;
   width:100%;
   display:grid;
   /* Increased card column width from 420px to 560px */
-  grid-template-columns: 1fr 560px;
+  grid-template-columns: 1fr 60px;
   gap:3rem;
   align-items:center
 }

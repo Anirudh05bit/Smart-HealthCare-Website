@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import Layout from '../components/Layout';
+import { useNavigate } from 'react-router-dom';
+// import Layout from '../components/Layout'; // Removed to integrate into Home.jsx layout
 import './register.css';
 
-export default function Register() {
+// Renamed component to RegisterPage for consistency and updated expected props
+export default function RegisterPage({ onGoBack, onNavigateToLogin }) {
   const [role, setRole] = useState('patient');
   const [form, setForm] = useState({
     name: '',
@@ -15,6 +17,10 @@ export default function Register() {
     specialization: '',
     hospital: '',
   });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   function update(field) {
     return (e) => setForm((s) => ({ ...s, [field]: e.target.value }));
@@ -22,106 +28,139 @@ export default function Register() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setError('');
+    setSuccess('');
 
     if (!form.name || !form.email || !form.password) {
-      alert('Please fill name, email, and password');
+      setError('Please fill name, email, and password.');
       return;
     }
 
     if (role === 'doctor' && (!form.license || !form.specialization)) {
-      alert('Please provide doctor license and specialization');
+      setError('Please provide doctor license and specialization.');
       return;
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/register', {
+      setLoading(true);
+      // NOTE: You are using the fetch('/register') API call here.
+      const res = await fetch('/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ role, ...form }),
+        body: JSON.stringify({ ...form, role }),
       });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(body.error || body.message || 'Registration failed');
+      
+      setSuccess('Registration successful — please sign in.');
+      setForm({ name: '', email: '', password: '', dob: '', address: '', emergency: '', license: '', specialization: '', hospital: '' });
+      
+      // After successful registration, navigate to the Login view in the Home component
+      setTimeout(() => {
+        onNavigateToLogin();
+      }, 1500); // Small delay to let user see success message
 
-      const data = await response.json();
-
-      if (response.ok) {
-        alert(data.message);
-        console.log('Registered:', data);
-        // optionally redirect to login
-        // window.location.href = '/login';
-      } else {
-        alert(data.error || 'Registration failed');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Error connecting to server');
+    } catch (err) {
+      setError(err.message || 'Registration error');
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-    <Layout>
-      <div className="register-page">
-        <div className="register-card">
-          <h2>Create account</h2>
-          <p className="muted">Select your role and enter required details</p>
+    <div className="register-page">
+      <div className="register-card">
+        <h2>Create account</h2>
+        <p className="muted">Select your role and enter required details</p>
 
-          <div className="role-toggle">
-            <button
-              type="button"
-              className={role === 'patient' ? 'role active' : 'role'}
-              onClick={() => setRole('patient')}
+        <div className="role-toggle">
+          <button
+            type="button"
+            className={role === 'patient' ? 'role active' : 'role'}
+            onClick={() => setRole('patient')}
+          >
+            Patient 🧑
+          </button>
+          <button
+            type="button"
+            className={role === 'doctor' ? 'role active' : 'role'}
+            onClick={() => setRole('doctor')}
+          >
+            Doctor 👨‍⚕️
+          </button>
+        </div>
+
+        <form className="register-form" onSubmit={handleSubmit}>
+          
+          {/* General Fields */}
+          <label className="label">Full name</label>
+          <input className="input" value={form.name} onChange={update('name')} required placeholder="e.g., Jane Doe" />
+
+          <label className="label">Email</label>
+          <input className="input" type="email" value={form.email} onChange={update('email')} required placeholder="you@example.com" />
+
+          <label className="label">Password</label>
+          <input className="input" type="password" value={form.password} onChange={update('password')} required placeholder="Set a strong password" />
+
+          {/* Patient Specific Fields */}
+          {role === 'patient' && (
+            <>
+              <label className="label">Date of birth</label>
+              <input className="input" type="date" value={form.dob} onChange={update('dob')} />
+
+              <label className="label">Address</label>
+              <input className="input" value={form.address} onChange={update('address')} placeholder="Street, City, Zip" />
+
+              <label className="label">Emergency contact</label>
+              <input className="input" value={form.emergency} onChange={update('emergency')} placeholder="Name or Phone Number" />
+            </>
+          )}
+
+          {/* Doctor Specific Fields */}
+          {role === 'doctor' && (
+            <>
+              <label className="label">Medical license number</label>
+              <input className="input" value={form.license} onChange={update('license')} placeholder="e.g., L-123456" />
+
+              <label className="label">Specialization</label>
+              <input className="input" value={form.specialization} onChange={update('specialization')} placeholder="e.g., Cardiology" />
+
+              <label className="label">Hospital / Clinic</label>
+              <input className="input" value={form.hospital} onChange={update('hospital')} placeholder="Current workplace" />
+            </>
+          )}
+
+          <button className="btn btn-primary full" type="submit" disabled={loading}>
+            {loading ? 'Creating account...' : 'Create account'}
+          </button>
+
+          {error && <p className="error-message">{error}</p>}
+          {success && <p className="success-message">{success}</p>}
+        </form>
+        
+        {/* Navigation to Login Page and Back to Home */}
+        <div className="alt">
+            <span>Already have an account?</span>
+            {/* Using the prop to navigate to the Login view */}
+            <button 
+                type="button" 
+                onClick={onNavigateToLogin}
+                style={{ background: 'none', border: 'none', color: '#06b6d4', cursor: 'pointer', fontWeight: '600', padding: '0 5px' }}
             >
-              Patient
+                **Sign in**
             </button>
-            <button
-              type="button"
-              className={role === 'doctor' ? 'role active' : 'role'}
-              onClick={() => setRole('doctor')}
+        </div>
+
+        <div className="alt" style={{ marginTop: '1rem' }}>
+            <button 
+                type="button" 
+                onClick={onGoBack}
+                style={{ background: 'none', border: 'none', color: '#155e75', cursor: 'pointer', fontWeight: '500', padding: '0 5px' }}
             >
-              Doctor
+                &larr; **Back to Home**
             </button>
-          </div>
-
-          <form className="register-form" onSubmit={handleSubmit}>
-            <label className="label">Full name</label>
-            <input className="input" value={form.name} onChange={update('name')} required />
-
-            <label className="label">Email</label>
-            <input className="input" type="email" value={form.email} onChange={update('email')} required />
-
-            <label className="label">Password</label>
-            <input className="input" type="password" value={form.password} onChange={update('password')} required />
-
-            {role === 'patient' && (
-              <>
-                <label className="label">Date of birth</label>
-                <input className="input" type="date" value={form.dob} onChange={update('dob')} />
-
-                <label className="label">Address</label>
-                <input className="input" value={form.address} onChange={update('address')} />
-
-                <label className="label">Emergency contact</label>
-                <input className="input" value={form.emergency} onChange={update('emergency')} />
-              </>
-            )}
-
-            {role === 'doctor' && (
-              <>
-                <label className="label">Medical license number</label>
-                <input className="input" value={form.license} onChange={update('license')} />
-
-                <label className="label">Specialization</label>
-                <input className="input" value={form.specialization} onChange={update('specialization')} />
-
-                <label className="label">Hospital / Clinic</label>
-                <input className="input" value={form.hospital} onChange={update('hospital')} />
-              </>
-            )}
-
-            <button className="btn btn-primary full" type="submit">
-              Create account
-            </button>
-          </form>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 }
