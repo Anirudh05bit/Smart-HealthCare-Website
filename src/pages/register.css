@@ -8,27 +8,16 @@
   --glass: rgba(13, 42, 48, 0.04);
 }
 
-.register-page {
-  /* Reduced min-height to ensure content fits within the viewport */
-  /* Reduced top/bottom margin */
-  background: linear-gradient(145deg, #7bb6ba, #44868e);
-  min-height: 91vh; /* Changed from calc(100vh - 80px) to 100vh for simpler calculation */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem 1rem; /* Reduced padding */
-  margin: 0; /* Removed margin to maximize vertical space */
-}
+
 
 .register-hero {
-  /* Reduced max-width slightly and gap to save space */
-  max-width: 1000px;
-  margin: 0 auto;
+
+
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 480px; /* Decreased card column width slightly */
-  gap: 2rem; /* Reduced gap */
-  align-items: center;
+  grid-template-columns: 1fr 380px; /* Decreased card column width slightly */
+   /* Reduced gap */
+
   /* Added a small top margin to pull content up */
   margin-top: 20px;
 }
@@ -44,14 +33,14 @@
 .register-card {
   background:var(--card);
   border-radius:18px;
-  padding:1.4rem; /* Slightly reduced padding */
-  box-shadow: 0 20px 50px rgba(18,38,46,0.08);
+  padding:0rem 1.5rem; /* Slightly reduced padding */
+  box-shadow: 0 10px 50px rgba(18,38,46,0.08);
   border:1px solid rgba(13,42,48,0.04);
   animation: cardPop .45s cubic-bezier(.2,.9,.3,1);
-  margin-top: 1.5rem;
+  
   align-self: center;
   justify-self: center;
-
+  color: #0f172a;
   width: 100%;
   max-width: 480px; /* Matches the grid column size */
 }
